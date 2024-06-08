@@ -1,0 +1,44 @@
+version: '3.0'
+
+services:
+  redis:
+    image: redis:7.2.4
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    env_file:
+      - ./.env
+    volumes:
+      - ./.data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  keycloack:
+    image: quay.io/keycloak/keycloak:24.0.4
+    hostname: keycloack
+    env_file:
+      - ./.env
+    command: start-dev
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    entrypoint: uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8000 --reload --log-config ../logging.yaml --log-level warning
+    volumes:
+      - ./app:/opt/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - redis
+      - keycloack
+    restart: unless-stopped
