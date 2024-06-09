@@ -5,8 +5,8 @@ from typing import List
 from dto.info import Status
 from dto.info import StatusMessage
 from services.auth import UserInfo
-from services.client.proto import MatrixClient
 from services.client.data import Message
+from services.client.proto import MatrixClient
 from services.client.receive import MessageReceiver
 from services.stream import Stream
 
@@ -66,5 +66,5 @@ class StreamMatrixClient(MatrixClient):
 
     async def _send_to_client(self, message: StatusMessage):
         """Реализация сериализации сообщения и отправки его клиенту"""
-        
+
         await self._stream.send_text(message.json())

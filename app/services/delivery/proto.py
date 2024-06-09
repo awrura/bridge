@@ -1,6 +1,6 @@
-from typing import List
-from typing import Protocol
-from typing import Tuple
+from typing import List  # pragma: no cover
+from typing import Protocol  # pragma: no cover
+from typing import Tuple  # pragma: no cover
 
 
 class MessageDelivery(Protocol):

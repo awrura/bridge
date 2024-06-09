@@ -1,5 +1,6 @@
-from typing import Protocol
 from typing import Any
+from typing import Protocol
+
 
 class Stream(Protocol):
     """
@@ -9,12 +10,12 @@ class Stream(Protocol):
 
     async def accept(self) -> None:
         """Приянять соединение от клиента"""
-        
+
         raise NotImplementedError()
 
     async def send_text(self, data: str) -> None:
         """Отправить сообщение клиенту"""
-        
+
         raise NotImplementedError()
 
     async def wait_json(self) -> Any:
@@ -23,6 +24,5 @@ class Stream(Protocol):
         :raises:
             ValueError: В случае проблем с обработкой входных данных
         """
-        
+
         raise NotImplementedError()
-        
