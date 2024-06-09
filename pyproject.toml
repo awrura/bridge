@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "aurora-rsc"
+name = "bridge"
 version = "0.1.0"
 description = ""
 authors = ["twoics <second_vozhzhov@mail.ru>"]
@@ -26,6 +26,8 @@ pre-commit = "^3.6.0"
 pytest = "^8.0.1"
 pytest-asyncio = "^0.23.5"
 fakeredis = "^2.21.1"
+pytest-cov = "^5.0.0"
+pytest-mock = "^3.14.0"
 
 [build-system]
 requires = ["poetry-core"]
