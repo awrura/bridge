@@ -1,13 +1,15 @@
 from services.client import MatrixClient
-from services.client.receive.rgb_ws import WsRGBMessageReceiver
-from services.client.ws import WsMatrixClient
+from services.client.receive.rgb import RGBMessageReceiver
+from services.client.stream import StreamMatrixClient
+from services.stream.ws import WsStream
 from starlette.websockets import WebSocket
 
 
 def get_matrix_client(websocket: WebSocket) -> MatrixClient:
     """Получить объект клиента матрицы для установки и работы с соединением"""
 
-    return WsMatrixClient(
-        ws=websocket,
-        receiver=WsRGBMessageReceiver(ws=websocket),
+    stream = WsStream(ws=websocket)
+    return StreamMatrixClient(
+        stream,
+        receiver=RGBMessageReceiver(stream),
     )
