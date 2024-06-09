@@ -11,7 +11,7 @@ class MessageReceiver(Protocol):
         Ожидание сообщений от клиента и их считывание
 
         :raises:
-            ConnectionError: При возникновении проблем с получением сообщения
+            ValueError: При возникновении проблем с обработкой сообщения
         """
 
         raise NotImplementedError()
