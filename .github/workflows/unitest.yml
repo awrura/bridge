@@ -4,6 +4,8 @@ on: [push, pull_request]
 
 jobs:
   test:
+    permissions: 
+      checks: write
     runs-on: ubuntu-latest
 
     steps:
