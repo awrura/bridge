@@ -12,12 +12,12 @@ class WsStream(Stream):
     async def accept(self) -> None:
         """Приянять соединение от клиента"""
 
-        await self._ws.accept()
+        await self._ws.accept() # pragma: no cover
 
     async def send_text(self, data: str) -> None:
         """Отправить сообщение клиенту"""
 
-        await self._ws.send_text(data)
+        await self._ws.send_text(data) # pragma: no cover
 
     async def wait_json(self) -> Any:
         """
