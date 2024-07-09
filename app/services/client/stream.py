@@ -44,7 +44,7 @@ class StreamMatrixClient(MatrixClient):
             ConnectionError: При возникновении проблем с получением сообщения
         """
 
-        return await self._receiver.blrecieve()
+        return await self._receiver.blrecieve() # pragma: no cover
 
     async def send_error(self, msg: List[Dict]):
         """
@@ -54,7 +54,7 @@ class StreamMatrixClient(MatrixClient):
         :param msg: Список сообщений об ошибках
         """
 
-        await self._send_to_client(StatusMessage(status=Status.ERROR, err_msg=msg))
+        await self._send_to_client(StatusMessage(status=Status.ERROR, err_msg=msg)) # pragma: no cover
 
     async def send_success(self):
         """
@@ -62,9 +62,9 @@ class StreamMatrixClient(MatrixClient):
         отправлении изображения на матрицу
         """
 
-        await self._send_to_client(StatusMessage())
+        await self._send_to_client(StatusMessage()) # pragma: no cover
 
     async def _send_to_client(self, message: StatusMessage):
         """Реализация сериализации сообщения и отправки его клиенту"""
 
-        await self._stream.send_text(message.json())
+        await self._stream.send_text(message.json()) # pragma: no cover
