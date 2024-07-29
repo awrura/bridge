@@ -28,12 +28,6 @@ class StreamMatrixClient(MatrixClient):
             ConnectionError: В случае проблем с соединением
         """
 
-        if matrix_name not in usr_info.matrices:
-            logger.info(
-                f'For user with username {usr_info.login} access denied to {matrix_name}'
-            )
-            raise ConnectionError('Access denied')
-
         await self._stream.accept()
 
     async def blreceive(self) -> Message:
