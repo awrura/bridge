@@ -4,7 +4,7 @@ from typing import List
 from dto.pixel import RGBPixel
 from pydantic import TypeAdapter
 from pydantic import ValidationError
-from services.client.data import Message
+from services.receive.data import Message
 from services.receive.proto import MessageReceiver
 from services.stream import Stream
 
