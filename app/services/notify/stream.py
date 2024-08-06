@@ -4,41 +4,17 @@ from typing import List
 
 from dto.info import Status
 from dto.info import StatusMessage
-from services.auth import UserInfo
-from services.client.data import Message
-from services.client.proto import MatrixClient
-from services.client.receive import MessageReceiver
+from services.notify.proto import Notifier
 from services.stream import Stream
-
 
 logger = logging.getLogger(__name__)
 
 
-class StreamMatrixClient(MatrixClient):
-    """Реализация клиента матрицы для подключения по Stream"""
+class StreamNotifier(Notifier):
+    """Реализация уведомления пользователя о выполнении операции через Stream"""
 
-    def __init__(self, stream: Stream, receiver: MessageReceiver):
+    def __init__(self, stream: Stream):
         self._stream = stream
-        self._receiver = receiver
-
-    async def accept(self, matrix_name: str, usr_info: UserInfo):
-        """
-        Принять соединение от клиента
-        :raises:
-            ConnectionError: В случае проблем с соединением
-        """
-
-        await self._stream.accept()
-
-    async def blreceive(self) -> Message:
-        """
-        Ожидать входных данных клиента, после
-        получения преобразовать их в тип message
-        :raises:
-            ConnectionError: При возникновении проблем с получением сообщения
-        """
-
-        return await self._receiver.blrecieve()  # pragma: no cover
 
     async def send_error(self, msg: List[Dict]):
         """

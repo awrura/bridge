@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from services.client.data import Message
+from services.receive.data import Message
 
 
 class MessageReceiver(Protocol):
