@@ -1,6 +1,6 @@
 from services.client import MatrixClient
-from services.receive.rgb import RGBMessageReceiver
 from services.client.stream import StreamMatrixClient
+from services.receive.rgb import RGBMessageReceiver
 from services.stream.ws import WsStream
 from starlette.websockets import WebSocket
 
