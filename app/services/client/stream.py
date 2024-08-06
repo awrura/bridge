@@ -7,7 +7,7 @@ from dto.info import StatusMessage
 from services.auth import UserInfo
 from services.client.data import Message
 from services.client.proto import MatrixClient
-from services.client.receive import MessageReceiver
+from services.receive import MessageReceiver
 from services.stream import Stream
 
 

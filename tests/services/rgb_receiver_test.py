@@ -1,6 +1,6 @@
 import pytest
 
-from app.services.client.receive.rgb import RGBMessageReceiver
+from app.services.receive.rgb import RGBMessageReceiver
 
 
 class TestRGBMessageReceiver:
