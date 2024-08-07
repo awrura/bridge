@@ -31,7 +31,7 @@ class TestRGBMessageReceiver:
 
         receiver = RGBMessageReceiver(stream)
         response = await receiver.blrecieve()
-        
+
         assert not response.is_valid
 
     @pytest.mark.parametrize(
