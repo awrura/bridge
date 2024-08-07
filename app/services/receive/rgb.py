@@ -18,15 +18,13 @@ class RGBMessageReceiver(MessageReceiver):
     async def blrecieve(self) -> Message:
         """
         Прием json сообщения, из объектов формата RGBPixel, через WS
-        :raises:
-            ValueError: При невозможности обработать входные данные
         """
 
         try:
             data = await self._stream.wait_json()
         except ValueError as ex:
-            logging.info(ex)
-            raise ValueError('Received not supported data')
+            logging.warn(ex)
+            return Message(data=[], errors=[{'data': 'Received data not supported'}])
         return self.parse(data)
 
     def parse(self, data) -> Message:

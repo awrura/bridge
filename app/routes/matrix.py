@@ -33,7 +33,7 @@ async def control(
     conf: Settings = Depends(get_settings),
 ):
     try:
-        # В случае ошибок с принятием подключения (Правами)
+        # В случае ошибок с принятием подключения
         await stream.accept()
     except ConnectionError:
         await ws.accept()  # Для корректного отображения сообщения об ошибке
@@ -42,7 +42,12 @@ async def control(
     limit = Limiter(seconds=1, times=conf.WS_QUERY_COUNT_PER_SECOND)
     logger.info(f'Someone connected to matrix {matrix_name}')
     while True:
-        data = await receiver.blrecieve()
+        try:
+            data = await receiver.blrecieve()
+        except ConnectionError:
+            logger.info(f'Someone disconnected from matrix {matrix_name}')
+            return
+
         await limit(ws)
         if not data.is_valid:
             await notifier.send_error(data.errors)

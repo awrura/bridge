@@ -13,6 +13,11 @@ class Stream(Protocol):
 
         raise NotImplementedError()
 
+    async def close(self) -> None:
+        """Закрыть соединение от клиента"""
+
+        raise NotImplementedError()
+
     async def send_text(self, data: str) -> None:
         """Отправить сообщение клиенту"""
 
@@ -23,6 +28,7 @@ class Stream(Protocol):
         Ожидание данных от клиента, для передачи на матрицу
         :raises:
             ValueError: В случае проблем с обработкой входных данных
+            ConnectionError: В случае проблем с соединенем при считывании данных
         """
 
         raise NotImplementedError()
