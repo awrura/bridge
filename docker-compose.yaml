@@ -7,26 +7,6 @@ services:
       - "6379:6379"
     restart: unless-stopped
 
-  postgres:
-    image: postgres:15
-    env_file:
-      - ./.env
-    volumes:
-      - ./.data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-  keycloack:
-    image: quay.io/keycloak/keycloak:24.0.4
-    hostname: keycloack
-    env_file:
-      - ./.env
-    command: start-dev
-    ports:
-      - '8080:8080'
-    depends_on:
-      - postgres
-    restart: unless-stopped
-
   server:
     build:
       context: ./
@@ -40,5 +20,4 @@ services:
       - ./.env
     depends_on:
       - redis
-      - keycloack
     restart: unless-stopped
