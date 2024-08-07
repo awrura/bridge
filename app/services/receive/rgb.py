@@ -1,29 +1,30 @@
 import logging
-from json import JSONDecodeError
 from typing import List
 
 from dto.pixel import RGBPixel
 from pydantic import TypeAdapter
 from pydantic import ValidationError
-from services.client.data import Message
-from services.client.receive.proto import MessageReceiver
-from starlette.websockets import WebSocket
+from services.receive.data import Message
+from services.receive.proto import MessageReceiver
+from services.stream import Stream
 
 logger = logging.getLogger(__name__)
 
 
-class WsRGBMessageReceiver(MessageReceiver):
-    def __init__(self, ws: WebSocket):
-        self._ws = ws
+class RGBMessageReceiver(MessageReceiver):
+    def __init__(self, stream: Stream):
+        self._stream = stream
 
     async def blrecieve(self) -> Message:
-        """Прием json сообщения, из объектов формата RGBPixel, через WS"""
+        """
+        Прием json сообщения, из объектов формата RGBPixel, через WS
+        """
 
         try:
-            data = await self._ws.receive_json()
-        except JSONDecodeError as ex:
-            logging.info(ex)
-            raise ConnectionError('Unable parse data')
+            data = await self._stream.wait_json()
+        except ValueError as ex:
+            logging.warn(ex)
+            return Message(data=[], errors=[{'data': 'Received data not supported'}])
         return self.parse(data)
 
     def parse(self, data) -> Message:
