@@ -30,8 +30,9 @@ class TestRGBMessageReceiver:
         stream = mocker.Mock(wait_json=mocker.AsyncMock(side_effect=ValueError()))
 
         receiver = RGBMessageReceiver(stream)
-        with pytest.raises(ValueError):
-            await receiver.blrecieve()
+        response = await receiver.blrecieve()
+        
+        assert not response.is_valid
 
     @pytest.mark.parametrize(
         'data',
