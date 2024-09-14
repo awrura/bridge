@@ -1,6 +1,5 @@
 import json
 import logging
-from itertools import chain
 from typing import List
 from typing import Tuple
 
@@ -29,6 +28,6 @@ class RedisBrokerDelivery(MessageDelivery):
 
         logger.info(f'Pushing msg to matrix: {matrix_name}')
         to_send = json.dumps(
-            {'topic': f'matrix/{matrix_name}', 'data': list(chain(message))}
+            {'topic': f'matrix/{matrix_name}', 'data': [color for pixel in message for color in pixel]}
         )
         await self._redis.rpush(self._conf.BROKER_QUEUE_NAME, to_send)  # pyright: ignore[reportGeneralTypeIssues]
