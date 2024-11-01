@@ -50,6 +50,8 @@ async def control(
     delivery: MessageDelivery = Depends(get_msg_delivery),
     conf: Settings = Depends(get_settings),
 ):
+    """Рисование на матрице в режиме реального времени"""
+
     try:
         # В случае ошибок с принятием подключения
         await stream.accept()
@@ -58,12 +60,12 @@ async def control(
         raise WebSocketException(WS_1008_POLICY_VIOLATION, 'Access denied')
 
     limit = Limiter(seconds=1, times=conf.WS_QUERY_COUNT_PER_SECOND)
-    logger.info(f'Someone connected to matrix {matrix_name}')
+    logger.info(f'Connected to matrix {matrix_name}')
     while True:
         try:
             data = await receiver.blrecieve()
         except ConnectionError:
-            logger.info(f'Someone disconnected from matrix {matrix_name}')
+            logger.info(f'Disconnected from matrix {matrix_name}')
             return
 
         await limit(ws)
