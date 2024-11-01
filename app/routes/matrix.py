@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from config.config import Settings
 from deps.config import get_settings
@@ -6,9 +7,13 @@ from deps.delivery import get_msg_delivery
 from deps.notify import get_notifier
 from deps.receive import get_msg_receiver
 from deps.stream import get_stream
+from dto.pixel import RGBPixel
 from fastapi import APIRouter
+from fastapi import Body
 from fastapi import Depends
 from fastapi import Path
+from fastapi import Response
+from fastapi import status
 from fastapi import WebSocketException
 from fastapi_limiter.depends import WebSocketRateLimiter as Limiter
 from services.delivery import MessageDelivery
@@ -20,6 +25,19 @@ from starlette.websockets import WebSocket
 
 router = APIRouter()
 logger = logging.getLogger()
+
+
+@router.post('/rgb/{matrix_name}')
+async def draw(
+    matrix_name: str = Path(),
+    delivery: MessageDelivery = Depends(get_msg_delivery),
+    pixels: List[RGBPixel] = Body(...),
+):
+    """Отрисовать пиксельную картинку на матрице"""
+
+    raw_pixels = [(p.red, p.green, p.blue) for p in pixels]
+    await delivery.send(matrix_name, raw_pixels)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.websocket('/rgb/{matrix_name}')
