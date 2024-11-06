@@ -4,6 +4,7 @@ import logging
 from asgi_correlation_id import CorrelationIdMiddleware
 from deps.config import get_settings
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_limiter import FastAPILimiter
 from middleware.log import LoggingMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
@@ -30,5 +31,14 @@ Instrumentator().instrument(app).expose(app)
 
 app.add_middleware(LoggingMiddleware)
 app.add_middleware(CorrelationIdMiddleware)
+
+origins = ['*']
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 app.include_router(matrix_router, tags=['matrix'], prefix='/matrix')
