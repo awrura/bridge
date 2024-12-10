@@ -18,7 +18,7 @@ class WsStream(Stream):
     async def close(self) -> None:
         """Закрыть соединение от клиента"""
 
-        await self._ws.close()
+        await self._ws.close()  # pragma: no cover
 
     async def send_text(self, data: str) -> None:
         """Отправить сообщение клиенту"""

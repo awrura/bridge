@@ -1,6 +1,7 @@
 from json import JSONDecodeError
 
 import pytest
+from fastapi import WebSocketDisconnect
 
 from app.services.stream.ws import WsStream
 
@@ -16,6 +17,16 @@ class TestWsStream:
 
         receiver = WsStream(ws)
         with pytest.raises(ValueError):
+            await receiver.wait_json()
+
+    @pytest.mark.asyncio
+    async def test_connection_error(self, mocker):
+        ws = mocker.AsyncMock(
+            receive_json=mocker.AsyncMock(side_effect=WebSocketDisconnect())
+        )
+
+        receiver = WsStream(ws)
+        with pytest.raises(ConnectionError):
             await receiver.wait_json()
 
     @pytest.mark.asyncio
