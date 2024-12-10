@@ -19,3 +19,4 @@ exclude_also =
     @(abc\.)?abstractmethod
     import .*
     from .* import .* 
+    logger*
