@@ -17,3 +17,5 @@ exclude_also =
     if TYPE_CHECKING:
     class .*\bProtocol\):
     @(abc\.)?abstractmethod
+    import .*
+    from .* import .* 
