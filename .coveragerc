@@ -18,5 +18,5 @@ exclude_also =
     class .*\bProtocol\):
     @(abc\.)?abstractmethod
     import .*
-    from .* import .* 
+    from .* import .*
     logger*
