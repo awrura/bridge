@@ -45,7 +45,7 @@ class TestWsStream:
 
         stream = WsStream(ws)
         await stream.accept()
-        assert ws.accept.called
+        ws.accept.assert_called_once()
 
     @pytest.mark.asyncio
     async def test_close_ws(self, mocker):
@@ -53,5 +53,4 @@ class TestWsStream:
 
         stream = WsStream(ws)
         await stream.close()
-        assert ws.close.called
-
+        ws.close.assert_called_once()
