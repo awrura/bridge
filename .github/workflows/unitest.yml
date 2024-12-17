@@ -29,11 +29,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        poetry install
+        poetry install --with cicov
 
     - name: Run tests
       run: |
         poetry run pytest --junitxml=report.xml --cov --cov-report=xml
+
+    - name: Generate Badge
+      run: |
+        poetry run genbadge tests -i - < report.xml -v
 
     - name: Upload reports
       uses: actions/upload-artifact@v3
