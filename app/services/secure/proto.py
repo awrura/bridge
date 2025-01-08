@@ -3,19 +3,20 @@ from typing import Protocol
 from dto.access import UserAccess
 
 
-class JwtUserAccessParser(Protocol):
-    def parse(self, jwt_access_key: str) -> UserAccess | None:
+class AccessKeyParser(Protocol):
+    def parse(self, access_key: str) -> UserAccess | None:
         """
-        Парсинг JWT в структуру доступных пользователю матриц
+        Парсинг ключа доступа в структуру доступных пользователю матриц
         """
 
         raise NotImplementedError()
 
 
-class ConnectValidator(Protocol):
-    def ask_permission(self, target_matrix: str) -> bool:
+class AccessValidator(Protocol):
+    def ask_permission(self, access_key: str, target_matrix: str) -> bool:
         """
         Спросить разрешения о возможности подключения
+        с данным ключом доступа к конкретной матрице
         """
 
         raise NotImplementedError()
