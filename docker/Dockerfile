@@ -9,5 +9,5 @@ COPY ./docker/  /opt/docker/
 RUN mkdir -p /opt/logs && \
     pip install poetry && \
     poetry config virtualenvs.create false && \
-    poetry install --no-dev --no-interaction --no-ansi
+    poetry install --only main --no-interaction --no-ansi
 WORKDIR /opt/app
