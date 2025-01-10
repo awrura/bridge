@@ -1,2 +1,4 @@
+from .secure import jwt_parser
+
 # Все фикстуры импортировать сюда обязательно
-# __all__ = ['f1', 'f2', 'f3'...]
+__all__ = [jwt_parser]  # pyright: ignore
