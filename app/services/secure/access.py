@@ -21,7 +21,7 @@ class JwtParser(AccessKeyParser):
             )
             return UserAccess.model_validate(decoded)
         except jwt.PyJWTError:
-            logger.error(f'Unable to decode access key {access_key}')
+            logger.error(f'Unable to decode access key - "{access_key}"')
         except pydantic.ValidationError:
             logger.error('Unable to parse access key to UserAccess')
         return None
@@ -31,10 +31,13 @@ class AccessByJwtValidator(AccessValidator):
     def __init__(self, parser: AccessKeyParser):
         self._parser = parser
 
-    def ask_permission(self, access_key: str, target_matrix: str) -> bool:
-        access = self._parser.parse(access_key)
-        if not access:
+    def ask_permission(self, access_key: str, target_matrix_uuid: str) -> bool:
+        access_info = self._parser.parse(access_key)
+        if not access_info:
             return False
 
-        available_matrix_uuids = map(lambda m: m.uuid, access.available_matrices)
-        return target_matrix in available_matrix_uuids
+        available_matrix_uuids = [m.uuid for m in access_info.available_matrices]
+        logger.info(
+            f'Decode JWT success. User "{access_info.username}" available matrices: {available_matrix_uuids}'
+        )
+        return target_matrix_uuid in available_matrix_uuids

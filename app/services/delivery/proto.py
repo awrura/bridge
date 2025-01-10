@@ -4,7 +4,7 @@ from typing import Tuple
 
 
 class MessageDelivery(Protocol):
-    async def send(self, matrix_name: str, message: List[Tuple[int, int, int]]):
+    async def send(self, matrix_uuid: str, message: List[Tuple[int, int, int]]):
         """
         Отправить сообщение на матрицу, с данным именем
 

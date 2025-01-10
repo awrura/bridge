@@ -13,7 +13,7 @@ class AccessKeyParser(Protocol):
 
 
 class AccessValidator(Protocol):
-    def ask_permission(self, access_key: str, target_matrix: str) -> bool:
+    def ask_permission(self, access_key: str, target_matrix_uuid: str) -> bool:
         """
         Спросить разрешения о возможности подключения
         с данным ключом доступа к конкретной матрице
