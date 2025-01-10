@@ -20,16 +20,16 @@ class RedisBrokerDelivery(MessageDelivery):
         self._redis = redis
         self._conf = conf
 
-    async def send(self, matrix_name: str, message: List[Tuple[int, int, int]]):
+    async def send(self, matrix_uuid: str, message: List[Tuple[int, int, int]]):
         """
         Отправить сообщение на матрицу - по ее уникальному имени,
         в redis брокер для дальнейшей отправки
         """
 
-        logger.info(f'Pushing msg to matrix: {matrix_name}')
+        logger.info(f'Pushing msg to matrix: {matrix_uuid}')
         to_send = json.dumps(
             {
-                'topic': f'matrix/{matrix_name}',
+                'topic': f'matrix/{matrix_uuid}',
                 'data': [color for pixel in message for color in pixel],
             }
         )
