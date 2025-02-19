@@ -36,7 +36,7 @@ jobs:
         poetry run pytest --junitxml=report.xml --cov --cov-report=xml
 
     - name: Upload reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-reports
         path: |
@@ -54,7 +54,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Download test reports
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: test-reports
         path: ./test-reports
