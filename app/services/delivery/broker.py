@@ -47,8 +47,7 @@ class RedisBrokerDelivery(MessageDelivery):
         logger.info(f'Pushing brightness to matrix: {matrix_name}')
 
         if not 0 <= value <= 255:
-            logger.error('Brightness level out of range')
-            return
+            raise ValueError('Brightness level out of range')
 
         to_send = json.dumps(
             {
