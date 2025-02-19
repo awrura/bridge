@@ -7,6 +7,7 @@ from deps.delivery import get_msg_delivery
 from deps.notify import get_notifier
 from deps.receive import get_msg_receiver
 from deps.stream import get_stream
+from dto.brightness import Brightness
 from dto.pixel import RGBPixel
 from fastapi import APIRouter
 from fastapi import Body
@@ -26,8 +27,19 @@ from starlette.websockets import WebSocket
 router = APIRouter()
 logger = logging.getLogger()
 
+@router.post('/{matrix_name}/brightness')
+async def set_brightness(
+    matrix_name: str = Path(),
+    delivery: MessageDelivery = Depends(get_msg_delivery),
+    brightness: Brightness = Body(...),
+):
+    """Установить яркость матрицы"""
 
-@router.post('/rgb/{matrix_name}')
+    await delivery.send_brightness(matrix_name, brightness.level)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post('/{matrix_name}/rgb')
 async def draw(
     matrix_name: str = Path(),
     delivery: MessageDelivery = Depends(get_msg_delivery),
@@ -36,7 +48,7 @@ async def draw(
     """Отрисовать пиксельную картинку на матрице"""
 
     raw_pixels = [(p.red, p.green, p.blue) for p in pixels]
-    await delivery.send(matrix_name, raw_pixels)
+    await delivery.send_pic(matrix_name, raw_pixels)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -72,5 +84,5 @@ async def control(
         if not data.is_valid:
             await notifier.send_error(data.errors)
             continue
-        await delivery.send(matrix_name, message=data.data)
+        await delivery.send_pic(matrix_name, message=data.data)
         await notifier.send_success()
