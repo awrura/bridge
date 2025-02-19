@@ -34,7 +34,7 @@ class RedisBrokerDelivery(MessageDelivery):
             {
                 'topic': f'matrix/{matrix_name}',
                 'data': [color for pixel in message for color in pixel],
-                'command': self.DRAW_PIC_COMMAND
+                'command': self.DRAW_PIC_COMMAND,
             }
         )
         await self._redis.rpush(self._conf.BROKER_QUEUE_NAME, to_send)  # pyright: ignore[reportGeneralTypeIssues]
@@ -45,16 +45,16 @@ class RedisBrokerDelivery(MessageDelivery):
         """
 
         logger.info(f'Pushing brightness to matrix: {matrix_name}')
-        
+
         if not 0 <= value <= 255:
-            logger.error(f'Brightness level out of range')
-            return 
+            logger.error('Brightness level out of range')
+            return
 
         to_send = json.dumps(
             {
                 'topic': f'matrix/{matrix_name}',
                 'data': [value],
-                'command': self.SET_BRIGHTNESS_COMMAND
+                'command': self.SET_BRIGHTNESS_COMMAND,
             }
         )
         await self._redis.rpush(self._conf.BROKER_QUEUE_NAME, to_send)  # pyright: ignore[reportGeneralTypeIssues]

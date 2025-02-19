@@ -15,7 +15,6 @@ class MessageDelivery(Protocol):
 
         raise NotImplementedError()
 
-
     async def send_brightness(self, matrix_name: str, value: int):
         """
         Установка яроксти для матрицы

@@ -27,6 +27,7 @@ from starlette.websockets import WebSocket
 router = APIRouter()
 logger = logging.getLogger()
 
+
 @router.post('/{matrix_name}/brightness')
 async def set_brightness(
     matrix_name: str = Path(),
