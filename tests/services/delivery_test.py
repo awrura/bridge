@@ -15,6 +15,6 @@ class TestRedisDelivery:
         conf = mocker.Mock(BROKER_QUEUE_NAME=queue)
 
         delivery = RedisBrokerDelivery(redis, conf)
-        await delivery.send(matrix, data)
+        await delivery.send_pic(matrix, data)
 
         assert await redis.lpop(queue) is not None  # pyright: ignore[reportGeneralTypeIssues]
