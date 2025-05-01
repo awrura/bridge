@@ -1,5 +1,6 @@
 [![Review](https://github.com/awrura/bridge/actions/workflows/review.yml/badge.svg)](https://github.com/awrura/bridge/actions/workflows/review.yml)
 [![Run Tests](https://github.com/awrura/bridge/actions/workflows/unitest.yml/badge.svg)](https://github.com/awrura/bridge/actions/workflows/unitest.yml)
+
 ![Static Badge](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=yellow)
 ![Static Badge](https://img.shields.io/badge/docker-25.0.4-blue?logo=docker)
 ![Static Badge](https://img.shields.io/badge/redis-7.2.4-blue?logo=redis&logoColor=red)
